@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+cd /app
+
+# if Procfile exists use it
+if [[ -e Procfile ]]; then
+    # find 'web' command in Procfile so we don't need foreman
+    CMD="$(grep web Procfile | awk -F': ' '{ print $2 }')"
+    
+    # otherwise just run the first command you find in there
+    if [[ -z ${CMD} ]]; then
+        CMD="$(head -n 1 Procfile | awk -F': ' '{ print $2 }')"
+    fi
+# if not we'll take a stab in the dark
+else
+    CMD="npm start"
+fi
+
+echo Running $CMD    
+$CMD

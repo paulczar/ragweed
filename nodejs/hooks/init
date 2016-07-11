@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+
+if [[ ! -e /app ]]; then
+    ln -s {{pkg.path}} /app
+fi
+
+ cd /app
+
+if [[ ! -e /app/node_modules ]]; then
+    npm install
+fi
